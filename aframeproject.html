@@ -1,0 +1,358 @@
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <link href="aframe.css" rel="stylesheet" type="text/css" />
+    <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aframe-extras@7.1.0/dist/aframe-extras.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-physics-system@v4.2.2/dist/aframe-physics-system.min.js"></script>
+    <script src="player.js"></script>
+    <script src="kinema.js"></script>
+    <script src="mountain.js"></script>
+    <script src="script.js"></script>
+  </head>
+  <body>
+
+    <audio id="bgms" loop>
+      <source src="wavesbg.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="startcrash">
+      <source src="crash.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="bg" autoplay loop>
+      <source src="bg.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="takeoff" loop>
+      <source src="takeoff.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="cheer">
+      <source src="crowdcheer.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="loadingScreen">
+      <button id="playButton">Play</button>
+    </div>
+
+  <div id="JoeyChestnut">
+    <a-scene physics="gravity: -10; restitution: 0.1; solver: rigid">
+      <!-- Preloading Models/Assets -->
+      <a-assets>
+        <a-asset_item id="gem" src="glowing_gem.glb"></a-asset_item>
+        <a-asset_item
+          id="tablet"
+          src="low_poly_sci-fi_tablet.glb"
+        ></a-asset_item>
+        <a-asset_item
+          id="spaceship"
+          src="nexus_nasa_1960s_super_heavy_rocket_project.glb"
+        ></a-asset_item>
+        <a-asset_item
+          id="eye"
+          src="material_ball_in_3d-coat.glb"
+        ></a-asset_item>
+        <a-asset_item
+          id="grass"
+          src="puffball_grass.glb"
+        ></a-asset_item>
+        <a-asset_item
+          id="tree"
+          src="mushroom_tree.glb"
+        ></a-asset_item>
+        <a-asset_item
+          id="mountain"
+          src="lowpolylandmountain.glb"
+        ></a-asset_item>
+        <a-asset_item
+          id="glacier"
+          src="lowpolyglacier.glb"
+        ></a-asset_item>
+        <a-asset_item
+          id="water"
+          src="water_animation.glb"
+        ></a-asset_item>
+        <a-asset_item
+          id="dynamite"
+          src="dynamite.glb"
+        ></a-asset_item>
+      </a-assets>
+      <!---->
+
+      <!-- Implementing Models -->
+      <a-entity id="collectibles">
+        
+        <a-entity id="collectible-box" position="0 0 30" geometry="primitive: box; width: 3; height: 3; depth: 3;" material="opacity: 0; transparent: true;" clickable>
+          <a-gltf-model src="#gem" scale="5 5 5" animation-mixer></a-gltf-model>
+        </a-entity>
+
+        
+        <a-entity id="tablet-box" position="30 19 25" rotation="45 0 0" geometry="primitive: box; width: 3; height: 3; depth: 3;" material="opacity: 0; transparent: true;" clickable>
+          <a-gltf-model src="#tablet" animation-mixer></a-gltf-model>
+        </a-entity>
+
+        
+        <a-entity id="eye-box" position="60 1 6" rotation="0 270 0" scale="0.1 0.1 0.1" rotation="0 90 0" geometry="primitive: box; width: 13; height: 13; depth: 13;" material="opacity: 0; transparent: true;" clickable>
+          <a-gltf-model src="#eye" animation-mixer></a-gltf-model>
+        </a-entity>
+
+       
+        <a-entity id="dynamite-box" position="7.5 0 -5" scale=".1 .1 .1" rotation="0 -85 0" geometry="primitive: box; width: 10; height: 10; depth: 10;" material="opacity: 0; transparent: true;" clickable>
+          <a-gltf-model src="#dynamite" animation-mixer></a-gltf-model>
+        </a-entity>
+      </a-entity>
+      <!---->
+
+      <!-- Player Interface -->
+
+
+      <a-entity id="player" dynamic-body="mass: 5; friction: 1;" position="0 1 0">
+      </a-entity>
+      <a-camera position="0 1.5 0" look-controls="pointerLockEnabled: true">
+        <a-cursor id="cursor"></a-cursor>
+      </a-camera>
+
+      <!---->
+
+      <!-- Map -->
+      
+    <a-entity id="Map" position = "20 0 0">
+        <a-plane static-body position="0 0 0" rotation="-90 0 0" width="100" height="100" color="brown"></a-plane>
+      <a-plane static-body position="0 -3.23685 62.07" rotation="-75 0 0" width="100" height="25" color="brown"></a-plane>
+
+      <a-box color="yellow" id="position1" opacity="0" width="2" height="1" position="-20 0 -7" depth="2"></a-box>
+      <a-box color="yellow" id="position2" opacity="0" width="2" height="0.01" position="-20 0 -4" depth="2"></a-box>
+      <a-box color="yellow" id="position3" opacity="0" width="2" height="1" position="-17 0.7 -4" depth="2"></a-box>
+      <a-box color="yellow" id="position4" opacity="0" width="2" height="1" position="-17 0 26" depth="2"></a-box>
+
+      <a-box color="grey" id="destructodoor" opacity="1" width="2" height="5" position="-20 0 28" depth="2" static-body></a-box>
+      
+      <a-sky color="#FAEBD7"></a-sky>
+
+        <a-entity id="cave">
+        <a-sphere color="grey" static-body position="-22.5 0 28" radius="1.5"></a-sphere>
+        <a-sphere color="grey" static-body position="-17.5 0 28" radius="1.5"></a-sphere>
+        <a-sphere color="grey" static-body position="-22.5 0 30" radius="1.5"></a-sphere>
+          <a-sphere color="grey" static-body position="-17.5 0 30" radius="1.5"></a-sphere>
+          <a-sphere color="grey" static-body position="-19 0 32" radius="1.5"></a-sphere>
+          <a-sphere color="grey" static-body position="-21 0 32" radius="1.5"></a-sphere>
+          <a-sphere color="grey" static-body position="-22.5 1 28" radius="1.5"></a-sphere>
+          <a-sphere color="grey" static-body position="-17.5 1 28" radius="1.5"></a-sphere>
+          <a-sphere color="grey" static-body position="-22.5 1 30" radius="1.5"></a-sphere>
+            <a-sphere color="grey" static-body position="-17.5 1 30" radius="1.5"></a-sphere>
+            <a-sphere color="grey" static-body position="-19 1 32" radius="1.5"></a-sphere>
+            <a-sphere color="grey" static-body position="-21 1 32" radius="1.5"></a-sphere>
+          <a-sphere color="grey" static-body position="-20.5 3 28" radius="1.5"></a-sphere>
+          <a-sphere color="grey" static-body position="-19.5 3 28" radius="1.5"></a-sphere>
+          <a-sphere color="grey" static-body position="-20.5 3 30" radius="1.5"></a-sphere>
+            <a-sphere color="grey" static-body position="-19.5 3 30" radius="1.5"></a-sphere>
+            <a-sphere color="grey" static-body position="-19 3 32" radius="1.5"></a-sphere>
+            <a-sphere color="grey" static-body position="-21 3 32" radius="1.5"></a-sphere>
+        </a-entity>
+      
+        <a-entity class="montana">
+          <a-gltf-model src="#mountain"  position="75 -55 90" scale=".5 .5 .5"></a-gltf-model>
+          <a-gltf-model src="#mountain"  position="55 -55 110" scale=".5 .5 .5"></a-gltf-model>
+          <a-gltf-model src="#mountain"  position="75 -55 135" scale=".5 .5 .5"></a-gltf-model>
+          <a-gltf-model src="#mountain"   position="55 -55 150" scale=".5 .5 .5"></a-gltf-model>
+          <a-gltf-model src="#mountain"  position="75 -55 175" scale=".5 .5 .5"></a-gltf-model>
+          <a-box color="yellow" width="50" depth="25" opacity="0" static-body height="25" position="-15 0 -30"> </a-box>
+          <a-box color="yellow" width="50" depth="25" opacity="0" static-body height="25" position="35 0 -15" rotation="0 -35 0"> </a-box>
+        </a-entity>
+      <a-entity class="montana"  position="145 0 0">
+        <a-gltf-model src="#mountain"  position="75 -55 90" scale=".5 .5 .5"></a-gltf-model>
+        <a-gltf-model src="#mountain"   position="55 -55 110" scale=".5 .5 .5"></a-gltf-model>
+        <a-gltf-model src="#mountain"   position="75 -55 135" scale=".5 .5 .5"></a-gltf-model>
+        <a-gltf-model src="#mountain"  position="55 -55 150" scale=".5 .5 .5"></a-gltf-model>
+        <a-gltf-model src="#mountain"  position="35 -55 175" scale=".5 .5 .5"></a-gltf-model>
+        <a-box color="yellow" width="50" static-body depth="47" opacity="0" static-body height="0.1" position="-100 1 32" rotation="0 100 0"> </a-box>
+      </a-entity>
+      <a-entity class="montana"  rotation="0 90 0" position="15 0 -120">
+        <a-gltf-model src="#mountain"  position="75 -55 90" scale=".5 .5 .5"></a-gltf-model>
+        <a-gltf-model src="#mountain"  position="55 -55 110" scale=".5 .5 .5"></a-gltf-model>
+        <a-gltf-model src="#mountain"  position="75 -55 135" scale=".5 .5 .5"></a-gltf-model>
+        <a-gltf-model src="#mountain"  position="55 -55 150" scale=".5 .5 .5"></a-gltf-model>
+        <a-gltf-model src="#mountain"  position="35 -55 175" scale=".5 .5 .5"></a-gltf-model>
+        <a-box color="yellow" width="50" static-body depth="30" opacity="0" static-body height="0.1" position="-150 1 -65"> </a-box>
+        <a-box color="blue" width="10" static-body depth="10" opacity="0" static-body height="3" position="-150 0 -50"> </a-box>
+      </a-entity>
+
+      <a-entity class="Obby">
+        <a-box color="purple" width="2" depth="2" height="25" position="0 0 25" static-body></a-box>
+        
+        <a-box color="purple" width="2" depth="2" height=".5" position="0 7.25 23" static-body></a-box>
+        <a-box color="purple" width="10" depth=".5" height=".5" position="5 7.25 23" static-body></a-box>
+        <a-box color="purple" width="2" depth="2" height=".5" position="10 7.25 23" static-body
+          animation="property: position; to: 10 12.25 23; dir: alternate; dur: 6000; loop: true; easing: easeInOutSine">
+        </a-box>
+
+        <a-box color="purple" width="2" depth="2" height=".5" position="8 12.25 23" static-body
+          animation="property: position; to: 0 12.25 23; dir: alternate; dur: 6000; loop: true; easing: easeInOutSine; delay: 6000">
+        </a-box>
+
+        <a-box color="purple" width="2" depth="2" height=".5" position="10 12.25 27" static-body
+          animation="property: position; to: 10 17.25 27; dir: alternate; dur: 6000; loop: true; easing: easeInOutSine; delay: 7000">
+        </a-box>
+
+        <a-box color="purple" width="2" depth="2" height=".5" position="0 12.25 27" static-body
+          animation="property: position; to: 8 12.25 27; dir: alternate; dur: 6000; loop: true; easing: easeInOutSine">
+        </a-box>
+
+
+
+        
+        <a-box color="purple" width="2" depth="2" height="35" position="10 0 25" static-body></a-box>
+
+
+        
+        <a-box color="purple" width="2" depth="2" height="15" position="10 0 15" static-body></a-box>
+        <a-box color="purple" width="2" depth="2" height=".5" position="10 0 13" static-body
+          animation="property: position; to: 10 4 13; dir: alternate; dur: 6000; loop: true; easing: easeInOutSine">
+        </a-box>
+        <a-box color="purple" width="2" depth="2" height=".5" position="12 4 13" static-body
+          animation="property: position; to: 12 4 17; dir: alternate; dur: 6000; loop: true; easing: easeInOutSine; delay: 6000">
+        </a-box>
+        <a-box color="purple" width="2" depth="2" height=".5" position="10 4 17" static-body
+          animation="property: position; to: 10 7.25 17; dir: alternate; dur: 6000; loop: true; easing: easeInOutSine; delay: 10000">
+        </a-box>
+        <a-box color="purple" width="2" depth="2" height=".5" position="8 7.25 15" static-body
+          animation="property: position; to: 2 7.25 15; dir: alternate; dur: 6000; loop: true; easing: easeInOutSine">
+        </a-box>
+        <a-box color="purple" width="2" depth="2" height=".5" position="0 7.25 15" static-body
+          animation="property: position; to: 0 7.25 21; dir: alternate; dur: 6000; loop: true; easing: easeInOutSine; delay: 6000">
+        </a-box>
+      </a-entity>
+
+
+      <a-entity id="aliengrass">
+        <a-gltf-model scale="2.5 2.5 2.5" src="#grass"></a-gltf-model>
+      </a-entity>
+
+      <a-gltf-model scale="10 10 10" src="#grass" position="35 0 5"></a-gltf-model>
+
+      <a-entity id="fuck_this_project">
+        <a-box color="yellow" scale="3 4 2" position="-5 2 0" static-body opacity="0"></a-box>
+        <a-box color="yellow" scale="3 4 2" position="-20 2 5" static-body opacity="0"></a-box>
+        <a-box color="yellow" scale="3 4 2" position="-5 2 10" static-body opacity="0"></a-box>
+        
+        <a-box color="yellow" scale="3 4 2" position="9 2 42" static-body opacity="0"></a-box>
+      </a-entity>
+      
+      <a-entity id="alientree">
+        <a-gltf-model src="#tree" position="-5 0 0" scale=".025 .025 .025"></a-gltf-model>
+      </a-entity>
+      <!-- stupid ass fucking aframe, you cannot cloneNode a static-body so even though I did fucking generate every single tree I gotta manually place a fucking collision box for every single fucking tree -->
+
+      <a-entity id="waves">
+        <a-gltf-model src="#water" color="blue" position="0 -2.8 0" scale="5 2 5" animation-mixer>
+      </a-entity>
+
+      <a-entity id="spaceshipx">
+      <a-gltf-model
+        src="#spaceship"
+        position="-16 1 -10"
+        rotation="0 145 -100"
+        scale="0.03 0.03 0.03"
+        animation-mixer
+      ></a-gltf-model>
+        <a-box           color="brown"
+          scale="2 2 2"
+          static-body
+          position="-22 0 -13"
+          rotation="23 92 22">
+        </a-box>
+        <a-box           color="grey"
+          scale="2 2 2"
+          static-body
+          position="-23 .5 -15"
+          rotation="54 21 62">
+        </a-box>
+        <a-box           color="brown"
+          scale="2 2 2"
+          static-body
+          position="-21 0 -14"
+          rotation="33 44 77">
+        </a-box>
+        <a-box           color="yellow"
+          scale="5 12 5"
+          position="-19 0 -13"
+          opacity="0"
+          static-body
+          rotation="0 145 -100">
+        </a-box>
+      </a-entity>
+        <a-box color="yellow" opacity="0" width="5" height="5" position="-16 0 -8" depth="5" rotation="0 45 0"></a-box>
+    </a-entity>
+      <!---->
+
+
+
+
+
+
+
+
+
+        <!-- <a-box
+          position="-40 0.8 40"
+          color="purple"
+          width="0.5"
+          height="10"
+          depth="46"
+        ></a-box>
+        <a-box
+          position="-56 0.8 42"
+          color="purple"
+          width="0.5"
+          height="10"
+          depth="40"
+        ></a-box> -->
+
+      <!-- testing something here ig 
+      <a-entity position="0, 0.5, -20">
+        <a-plane
+          static-body
+          position="0 0 0"
+          rotation="-90 0 0"
+          width="2"
+          height="10"
+          color="#7BC8A4"
+        ></a-plane>
+        <a-plane -->
+      <!-- static-body
+          position="3 0 0"
+          rotation="-90 0 0"
+          width="2"
+          height="10"
+          color="#7BC8A4"
+        ></a-plane>
+        <a-box
+          id="moving1"
+          static-body
+          position="0 .75 -4"
+          color="purple"
+          width="1.5"
+          height="1.5"
+          depth="1.5"
+          animation="property: position; to: 0 3 -4; dir: alternate; dur: 2000; loop: true;"
+        ></a-box>
+        <a-box -->
+      <!-- id="moving2"
+          static-body
+          position="3 .75 -4"
+          color="purple"
+          width="1.5"
+          height="1.5"
+          depth="1.5"
+          animation="property: position; to: 3 3 -4; dir: alternate; dur: 2000; loop: true;"
+        ></a-box> -->
+       
+
+      <!-- Deciding whether or not to do a traditional javascript loop or not since this is SO much easier, but I suppose -->
+
+      <!-- Commented out for debugging
+
+      -->
+    </a-scene>
+  </div>
+    <!-- Inline script for debugging -->
+  </body>
+</html>
