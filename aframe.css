@@ -34,12 +34,12 @@
   background-color: #0056b3;
 }
 
-/* Hide the A-Frame scene initially */
+/* Hide a-scene */
 #sceneContainer {
   display: none;
 }
 
-/* Fade-out Animation */
+/* Fade-out i think thats how I did it on my webdev */
 .fadeOut {
   animation: fadeOut 1s forwards;
 }
