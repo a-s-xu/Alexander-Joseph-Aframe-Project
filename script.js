@@ -87,16 +87,16 @@ let modelsPlaced = {
 window.addEventListener('mousedown', function(event) {   
   if (event.button === 0) {  
 
-    let cameraEl = document.querySelector('a-camera');   
-    let sceneEl = document.querySelector('a-scene');    
-    let cameraObj = cameraEl.object3D;    
-    let direction = new THREE.Vector3();   
-    cameraObj.getWorldDirection(direction);    
-    direction.multiplyScalar(-1);    
-    raycaster.set(cameraObj.position, direction);    
+    let camEl = document.querySelector('a-camera');   
+    let sceneStuff = document.querySelector('a-scene');    
+    let camObj = camEl.object3D;    
+    let dir = new THREE.Vector3();   
+    camObj.getWorldDirection(dir);    
+    dir.multiplyScalar(-1);    
+    raycaster.set(camObj.position, dir);    
 
-    let clickableObjects = sceneEl.querySelectorAll('[clickable]');    
-    let clickableMeshes = Array.from(clickableObjects).map(obj => obj.object3D);    
+    let clickableStuff = sceneStuff.querySelectorAll('[clickable]');    
+    let clickableMeshes = Array.from(clickableStuff).map(obj => obj.object3D);    
     let intersects = raycaster.intersectObjects(clickableMeshes, true);    
     console.log("Checking idk.");  
 
@@ -141,27 +141,27 @@ window.addEventListener('mousedown', function(event) {
         modelsPlaced.dynamite = true;    
       }    
 
-      console.log("Checking if all models are placed...");  
+      console.log("Checking if all models are c;ocled placed");  
 
       if (modelsPlaced.gem && modelsPlaced.tablet && modelsPlaced.eye) {     
         console.log("All models iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");  
-        let blackout = document.createElement('a-plane');    
-        blackout.setAttribute('width', '16');    
-        blackout.setAttribute('height', '9');    
-        blackout.setAttribute('color', 'black');    
-        blackout.setAttribute('opacity', '1');    
-        blackout.setAttribute('position', '0 0 -.11');    
-        blackout.setAttribute('rotation', '0 0 0');    
-        cameraEl.appendChild(blackout);    
+        let BlacScrn = document.createElement('a-plane');    
+        BlacScrn.setAttribute('width', '16');    
+        BlacScrn.setAttribute('height', '9');    
+        BlacScrn.setAttribute('color', 'black');    
+        BlacScrn.setAttribute('opacity', '1');    
+        BlacScrn.setAttribute('position', '0 0 -.11');    
+        BlacScrn.setAttribute('rotation', '0 0 0');    
+        camEl.appendChild(BlacScrn);    
 
-        let message = document.createElement('a-text');    
-        message.setAttribute('value', 'CONGRATULATIONS!\nYou successfully repaired your spaceship and returned home!');    
-        message.setAttribute('opacity', '1');    
-        message.setAttribute('color', 'white');    
-        message.setAttribute('align', 'center');    
-        message.setAttribute('position', '0 0 -.1');    
-        message.setAttribute('scale', '.05 .05 .05');    
-        cameraEl.appendChild(message);    
+        let Bruh = document.createElement('a-text');    
+        Bruh.setAttribute('value', 'CONGRATULATIONS!\nYou successfully repaired your spaceship and returned home!');    
+        Bruh.setAttribute('opacity', '1');    
+        Bruh.setAttribute('color', 'white');    
+        Bruh.setAttribute('align', 'center');    
+        Bruh.setAttribute('position', '0 0 -.1');    
+        Bruh.setAttribute('scale', '.05 .05 .05');    
+        camEl.appendChild(Bruh);    
 
         let cheer = document.getElementById('cheer');    
         let takeoff = document.getElementById('takeoff');    
@@ -178,62 +178,60 @@ window.addEventListener('mousedown', function(event) {
           console.log("Destroying door");  
           destructodoor.parentNode.removeChild(destructodoor);    
         }    
-      }    
+     }    
     } else {    
       console.log('No  clicked');    
     }    
-  }   });
+}  });
 //click function end
 
 //Intro sequence start
 window.addEventListener('load', function() { 
-
- let bg = document.querySelector('#bg'); 
- bg.play(); 
+  let bg = document.querySelector('#bg'); 
+  bg.play(); 
   document.getElementById('playButton').addEventListener('click', function() { 
     document.getElementById('loadingScreen').classList.add('fadeOut'); 
 
-    let cameraEl = document.querySelector('a-camera');   
-    let bgms = document.getElementById('bgms');  
-    let startcrash = document.getElementById('startcrash');  
+    let cam = document.querySelector('a-camera');   
+    let musicStuff = document.getElementById('bgms');  
+    let crashSound = document.getElementById('startcrash');  
     bg.pause();  
     bg.currentTime = 0;   
-    bgms.play(); 
-    startcrash.play(); 
+    musicStuff.play(); 
+    crashSound.play(); 
 
-    let blackout = document.createElement('a-plane');  
-    blackout.setAttribute('width', '16');  
-    blackout.setAttribute('height', '9');  
-    blackout.setAttribute('color', 'black');   
-    blackout.setAttribute('opacity', '1');  
-    blackout.setAttribute('position', '0 0 -.11');   
-    blackout.setAttribute('rotation', '0 0 0');   
-    cameraEl.appendChild(blackout);  
-
-    let message = document.createElement('a-text');  
-    message.setAttribute('value', 'Repair your spaceship and return home.');  
-    message.setAttribute('color', 'white');  
-    message.setAttribute('align', 'center');  
-    message.setAttribute('position', '0 0 -.1');  
-    message.setAttribute('scale', '.05 .05 .05');  
-    message.setAttribute('visible', 'false');   
-    cameraEl.appendChild(message);    
-    console.log("Blackout and message added");  
+    let BlacScrn = document.createElement('a-plane');  
+    BlacScrn.setAttribute('width', '16');  
+    BlacScrn.setAttribute('height', '9');  
+    BlacScrn.setAttribute('color', 'black');   
+    BlacScrn.setAttribute('opacity', '1');  
+    BlacScrn.setAttribute('position', '0 0 -.11');   
+    BlacScrn.setAttribute('rotation', '0 0 0');   
+    cam.appendChild(BlacScrn);  
+    let Bruh = document.createElement('a-text');  
+    Bruh.setAttribute('value', 'Repair your spaceship and return home.');  
+    Bruh.setAttribute('color', 'white');  
+    Bruh.setAttribute('align', 'center');  
+    Bruh.setAttribute('position', '0 0 -.1');  
+    Bruh.setAttribute('scale', '.05 .05 .05');  
+    Bruh.setAttribute('visible', 'false');   
+    cam.appendChild(Bruh);    
+    console.log("BlacScrn and Bruh added");  
     setTimeout(function() { 
-        blackout.setAttribute('opacity', '0.8');   
-        message.setAttribute('visible', 'true');   
+        BlacScrn.setAttribute('opacity', '0.8');   
+        Bruh.setAttribute('visible', 'true');   
     }, 7000);    
 
     setTimeout(function(){ 
-        message.setAttribute('visible', 'false');    
-        blackout.setAttribute('visible', 'false');  
+        Bruh.setAttribute('visible', 'false');    
+        BlacScrn.setAttribute('visible', 'false');  
     }, 10000);     
     setTimeout(function() { 
         document.getElementById('loadingScreen').style.display = 'none'; 
         document.getElementById('JoeyChestnut').style.display = 'block'; 
         console.log("Loading screen removed");   
     }, 1000); 
-  });});
+});});
 //Intro sequence End
 
 //Window
