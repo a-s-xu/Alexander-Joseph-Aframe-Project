@@ -1,5 +1,4 @@
-#loadingScreen {
-  position: absolute;
+#loadingScreen {position: absolute;
   top:0px;
   left:0px;
   width: 100vw;
@@ -12,10 +11,9 @@
   background-repeat: no-repeat;
   background-blend-mode: multiply;
   background-color: rgba(0, 123, 255, 0.5);
-  z-index: 10000;
-}
+  z-index: 10000;}
 
-#playButton {
+#playButton{
   padding: 18px 38px;
   font-size: 25px;
   background: rgb(0,123,255);
@@ -27,8 +25,7 @@
 }
 
 #playButton:hover {
-  background: rgb(0,86,179);
-}
+  background: rgb(0,86,179);}
 
 #sceneContainer {
   display: block;
@@ -36,11 +33,11 @@
   visibility: hidden;
 }
 
-.fadeOut {
-  animation: fadeOutAnim 0.8s ease-out forwards;
-}
+.fadeOut{animation: fadeOutAnim 0.8s ease-out forwards;}
 
 @keyframes fadeOutAnim {
   0% { opacity: 1; }
   100% { opacity: 0; display: none; }
 }
+
+/* I think this was important, idk it was on my web project */
