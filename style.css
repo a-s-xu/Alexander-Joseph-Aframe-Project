@@ -1,10 +1,9 @@
-* {
+*{
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
+  box-sizing: border-box;}
 
-body {
+body{
   font-family: Arial, sans-serif;
   height: 100vh;
   display: flex;
@@ -21,7 +20,7 @@ body {
   background-blend-mode: overlay;
 }
 
-#mainCont {
+#mainCont{
   display: flex;
   justify-content: space-between; 
   align-items: flex-start; 
@@ -37,8 +36,7 @@ body {
   flex: none; 
   text-align: center; 
   color: white;
-  font-size: 2.5rem;
-}
+  font-size: 2.5rem;}
 
 #navCards {
   width: 300px;
@@ -51,14 +49,15 @@ body {
   justify-content: flex-start;
   position: absolute;
   right: 5%; 
-  top: 10%;
-}
+  top: 10%;}
 
 /* 
 I think in general rem is better for fonts?
 1rem = 16px
 so on
 and so forth
+
+God bless html and css for being so easy
 */
 
 .menu {
@@ -71,20 +70,16 @@ and so forth
   border-radius: 5px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+  transition: background-color 0.3s ease;}
 
-.menu:hover {
-  background-color: #0056b3;
-}
+.menu:hover{background-color: #0056b3;}
 
 #descriptor{
   margin-top: 20px;
   font-size: 1.2rem;
   text-align: center;
   color: white;
-  padding: 10px;
-}
+  padding: 10px;}
 
 #title{
   margin-top: 60px;
