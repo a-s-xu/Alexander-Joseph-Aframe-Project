@@ -84,164 +84,156 @@ let modelsPlaced = {
   dynamite: false,
 };
 
-window.addEventListener('mousedown', (event) => {
-  if (event.button === 0) {
-    let cameraEl = document.querySelector('a-camera');
-    let sceneEl = document.querySelector('a-scene');
-    let cameraObj = cameraEl.object3D;
-    let direction = new THREE.Vector3();
-    cameraObj.getWorldDirection(direction);
-    direction.multiplyScalar(-1);
-    raycaster.set(cameraObj.position, direction);
+window.addEventListener('mousedown', function(event) {   
+  if (event.button === 0) {  
 
-    let clickableObjects = sceneEl.querySelectorAll('[clickable]');
-    let clickableMeshes = Array.from(clickableObjects).map(obj => obj.object3D);
-    let intersects = raycaster.intersectObjects(clickableMeshes, true);
+    let cameraEl = document.querySelector('a-camera');   
+    let sceneEl = document.querySelector('a-scene');    
+    let cameraObj = cameraEl.object3D;    
+    let direction = new THREE.Vector3();   
+    cameraObj.getWorldDirection(direction);    
+    direction.multiplyScalar(-1);    
+    raycaster.set(cameraObj.position, direction);    
 
-    if (intersects.length > 0) {
-      let clickedObj = intersects[0].object.el;
-      console.log('Clicked on:', clickedObj);
+    let clickableObjects = sceneEl.querySelectorAll('[clickable]');    
+    let clickableMeshes = Array.from(clickableObjects).map(obj => obj.object3D);    
+    let intersects = raycaster.intersectObjects(clickableMeshes, true);    
+    console.log("Checking idk.");  
 
-      
-      clickedObj.setAttribute('visible', false);
+    if (intersects.length > 0) {     
+      let clickedObj = intersects[0].object.el;     
+      console.log('Clicked on:', clickedObj);  
 
-      
-      clickedObj.removeAttribute('clickable');
+      clickedObj.setAttribute('visible', false);      
+      clickedObj.removeAttribute('clickable');   
 
-      
-      if (clickedObj.id === 'collectible-box') {
-        let gemModel = document.createElement('a-gltf-model');
-        gemModel.setAttribute('src', '#gem');
-        gemModel.setAttribute('scale', '5 5 5');
-        gemModel.setAttribute('animation-mixer', '');
-        document.querySelector('#position1').appendChild(gemModel);
-        modelsPlaced.gem = true;
-      }
-      else if (clickedObj.id === 'tablet-box') {
-        let tabletModel = document.createElement('a-gltf-model');
-        tabletModel.setAttribute('src', '#tablet');
-        tabletModel.setAttribute('animation-mixer', '');
-        document.querySelector('#position2').appendChild(tabletModel);
-        modelsPlaced.tablet = true;
-      }
-      else if (clickedObj.id === 'eye-box') {
-        let eyeModel = document.createElement('a-gltf-model');
-        eyeModel.setAttribute('src', '#eye');
-        eyeModel.setAttribute('scale', '0.1 0.1 0.1');
-        eyeModel.setAttribute('animation-mixer', '');
-        document.querySelector('#position3').appendChild(eyeModel);
-        modelsPlaced.eye = true;
-      }
-      else if (clickedObj.id === 'dynamite-box') {
-        let dynamiteModel = document.createElement('a-gltf-model');
-        dynamiteModel.setAttribute('src', '#dynamite');
-        dynamiteModel.setAttribute('scale', '.1 .1 .1');
-        dynamiteModel.setAttribute('animation-mixer', '');
-        dynamiteModel.setAttribute('data-dynamite', 'true'); 
-        dynamiteModel.setAttribute('clickable', true); 
-        document.querySelector('#position4').appendChild(dynamiteModel);
-        modelsPlaced.dynamite = true;
-      }
+      if (clickedObj.id === 'collectible-box'){  
+        let gemModel = document.createElement('a-gltf-model');    
+        gemModel.setAttribute('src', '#gem');    
+        gemModel.setAttribute('scale', '5 5 5');    
+        gemModel.setAttribute('animation-mixer', '');    
+        document.querySelector('#position1').appendChild(gemModel);    
+        modelsPlaced.gem = true;    
+      } 
+      else if (clickedObj.id === 'tablet-box'){   
+        let tabletModel = document.createElement('a-gltf-model');    
+        tabletModel.setAttribute('src', '#tablet');    
+        tabletModel.setAttribute('animation-mixer', '');    
+        document.querySelector('#position2').appendChild(tabletModel);    
+        modelsPlaced.tablet = true;    
+      } 
+      else if (clickedObj.id === 'eye-box') {   
+        let eyeModel = document.createElement('a-gltf-model');    
+        eyeModel.setAttribute('src', '#eye');    
+        eyeModel.setAttribute('scale', '0.1 0.1 0.1');    
+        eyeModel.setAttribute('animation-mixer', '');    
+        document.querySelector('#position3').appendChild(eyeModel);    
+        modelsPlaced.eye = true;    
+      } 
+      else if (clickedObj.id === 'dynamite-box') {   
+        let dynamiteModel = document.createElement('a-gltf-model');    
+        dynamiteModel.setAttribute('src', '#dynamite');    
+        dynamiteModel.setAttribute('scale', '.1 .1 .1');    
+        dynamiteModel.setAttribute('animation-mixer', '');    
+        dynamiteModel.setAttribute('data-dynamite', 'true');    
+        dynamiteModel.setAttribute('clickable', true);    
+        document.querySelector('#position4').appendChild(dynamiteModel);    
+        modelsPlaced.dynamite = true;    
+      }    
 
-      
-      if (modelsPlaced.gem && modelsPlaced.tablet && modelsPlaced.eye) {
-        let blackout = document.createElement('a-plane');
-        blackout.setAttribute('width', '16');
-        blackout.setAttribute('height', '9');
-        blackout.setAttribute('color', 'black');
-        blackout.setAttribute('opacity', '1');
-        blackout.setAttribute('position', '0 0 -.11');
-        blackout.setAttribute('rotation', '0 0 0');
-        cameraEl.appendChild(blackout);
+      console.log("Checking if all models are placed...");  
 
-        let message = document.createElement('a-text');
-        message.setAttribute('value', 'CONGRATULATIONS!\nYou successfully repaired your spaceship and returned home!');
-        message.setAttribute('opacity', '1');
-        message.setAttribute('color', 'white');
-        message.setAttribute('align', 'center');
-        message.setAttribute('position', '0 0 -.1');
-        message.setAttribute('scale', '.05 .05 .05');
-        cameraEl.appendChild(message);
+      if (modelsPlaced.gem && modelsPlaced.tablet && modelsPlaced.eye) {     
+        console.log("All models iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii");  
+        let blackout = document.createElement('a-plane');    
+        blackout.setAttribute('width', '16');    
+        blackout.setAttribute('height', '9');    
+        blackout.setAttribute('color', 'black');    
+        blackout.setAttribute('opacity', '1');    
+        blackout.setAttribute('position', '0 0 -.11');    
+        blackout.setAttribute('rotation', '0 0 0');    
+        cameraEl.appendChild(blackout);    
 
-        let cheer = document.getElementById('cheer');
-        let takeoff = document.getElementById('takeoff');
+        let message = document.createElement('a-text');    
+        message.setAttribute('value', 'CONGRATULATIONS!\nYou successfully repaired your spaceship and returned home!');    
+        message.setAttribute('opacity', '1');    
+        message.setAttribute('color', 'white');    
+        message.setAttribute('align', 'center');    
+        message.setAttribute('position', '0 0 -.1');    
+        message.setAttribute('scale', '.05 .05 .05');    
+        cameraEl.appendChild(message);    
 
-        cheer.play();
-        takeoff.play();
+        let cheer = document.getElementById('cheer');    
+        let takeoff = document.getElementById('takeoff');    
+        cheer.play();    
+        takeoff.play();    
 
-        window.removeEventListener('mousedown', handleMouseDown); 
-      }
-
-      
-      if (clickedObj.hasAttribute('data-dynamite')) {
-        let destructodoor = document.querySelector('#destructodoor');
-        if (destructodoor) {
-          destructodoor.parentNode.removeChild(destructodoor);  
-        }
-      }
-
-    } else {
-      console.log('No object clicked');
-    }
-  }
-});
+        console.log("Sounds playin");  
+        window.removeEventListener('mousedown', handleMouseDown);    
+      }    
+      console.log("Checking for dynami");  
+      if (clickedObj.hasAttribute('data-dynamite')) {   
+        let destructodoor = document.querySelector('#destructodoor');    
+        if (destructodoor) {    
+          console.log("Destroying door");  
+          destructodoor.parentNode.removeChild(destructodoor);    
+        }    
+      }    
+    } else {    
+      console.log('No  clicked');    
+    }    
+  }   });
 //click function end
 
 //Intro sequence start
-window.addEventListener('load', function () {
+window.addEventListener('load', function() { 
 
-  let bg = document.querySelector('#bg');
-  bg.play();
+ let bg = document.querySelector('#bg'); 
+ bg.play(); 
+  document.getElementById('playButton').addEventListener('click', function() { 
+    document.getElementById('loadingScreen').classList.add('fadeOut'); 
 
-  document.getElementById('playButton').addEventListener('click', function () {
-    document.getElementById('loadingScreen').classList.add('fadeOut');
+    let cameraEl = document.querySelector('a-camera');   
+    let bgms = document.getElementById('bgms');  
+    let startcrash = document.getElementById('startcrash');  
+    bg.pause();  
+    bg.currentTime = 0;   
+    bgms.play(); 
+    startcrash.play(); 
 
-    let cameraEl = document.querySelector('a-camera');  
+    let blackout = document.createElement('a-plane');  
+    blackout.setAttribute('width', '16');  
+    blackout.setAttribute('height', '9');  
+    blackout.setAttribute('color', 'black');   
+    blackout.setAttribute('opacity', '1');  
+    blackout.setAttribute('position', '0 0 -.11');   
+    blackout.setAttribute('rotation', '0 0 0');   
+    cameraEl.appendChild(blackout);  
 
-    let bgms = document.getElementById('bgms');
-    let startcrash = document.getElementById('startcrash');
-
-    bg.pause();
-    bg.currentTime = 0;
-
-    bgms.play();
-    startcrash.play();
-
-    let blackout = document.createElement('a-plane');
-    blackout.setAttribute('width', '16');
-    blackout.setAttribute('height', '9');
-    blackout.setAttribute('color', 'black');
-    blackout.setAttribute('opacity', '1');
-    blackout.setAttribute('position', '0 0 -.11');  
-    blackout.setAttribute('rotation', '0 0 0'); 
-    cameraEl.appendChild(blackout);
-
-    let message = document.createElement('a-text');
-    message.setAttribute('value', 'Repair your spaceship and return home.');
-    message.setAttribute('color', 'white');
-    message.setAttribute('align', 'center');
+    let message = document.createElement('a-text');  
+    message.setAttribute('value', 'Repair your spaceship and return home.');  
+    message.setAttribute('color', 'white');  
+    message.setAttribute('align', 'center');  
     message.setAttribute('position', '0 0 -.1');  
-    message.setAttribute('scale', '.05 .05 .05');
-    message.setAttribute('visible', 'false');  
-    cameraEl.appendChild(message);  
+    message.setAttribute('scale', '.05 .05 .05');  
+    message.setAttribute('visible', 'false');   
+    cameraEl.appendChild(message);    
+    console.log("Blackout and message added");  
+    setTimeout(function() { 
+        blackout.setAttribute('opacity', '0.8');   
+        message.setAttribute('visible', 'true');   
+    }, 7000);    
 
-    setTimeout(() => {
-      blackout.setAttribute('opacity', '0.8');
-      message.setAttribute('visible', 'true'); 
-    }, 7000);
-
-    setTimeout(() => {
-      message.setAttribute('visible', 'false'); 
-      blackout.setAttribute('visible', 'false'); 
-    }, 10000);  
-
-    setTimeout(() => {
-      document.getElementById('loadingScreen').style.display = 'none';
-      document.getElementById('JoeyChestnut').style.display = 'block';
-    }, 1000);
-  });
-
-});
+    setTimeout(function(){ 
+        message.setAttribute('visible', 'false');    
+        blackout.setAttribute('visible', 'false');  
+    }, 10000);     
+    setTimeout(function() { 
+        document.getElementById('loadingScreen').style.display = 'none'; 
+        document.getElementById('JoeyChestnut').style.display = 'block'; 
+        console.log("Loading screen removed");   
+    }, 1000); 
+  });});
 //Intro sequence End
 
 //Window
